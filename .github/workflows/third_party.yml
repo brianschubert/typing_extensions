@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print URL
-        run: echo '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+        run: echo '::error::Run URL ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
   pydantic:
     name: pydantic tests
     if: >-
