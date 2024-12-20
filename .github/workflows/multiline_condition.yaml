@@ -89,89 +89,89 @@ jobs:
 
       ${{ false }}
 
-  single-line-omit:
+  omit-single-line:
     runs-on: ubuntu-latest
     steps: [ run: true ]
     if: false
 
-  pipe-omit:
+  omit-pipe:
     runs-on: ubuntu-latest
     steps: [ run: true ]
     if: |
       false
 
 #  # Invalid workflow syntax.
-#  pipe-comment-omit:
+#  omit-pipe-comment:
 #    runs-on: ubuntu-latest
 #    steps: [ run: true ]
 #    if: |
 #      # foo
 #      false
 
-  pipe-blank-omit:
+  omit-pipe-blank:
     runs-on: ubuntu-latest
     steps: [ run: true ]
     if: |
 
       false
 
-  pipe-dash-omit:
+  omit-pipe-dash:
     runs-on: ubuntu-latest
     steps: [ run: true ]
     if: |-
       false
 
 #  # Invalid workflow syntax.
-#  pipe-dash-comment-omit:
+#  omit-pipe-dash-comment:
 #    runs-on: ubuntu-latest
 #    steps: [ run: true ]
 #    if: |-
 #      # foo
 #      false
 
-  pipe-dash-blank-omit:
+  omit-pipe-dash-blank:
     runs-on: ubuntu-latest
     steps: [ run: true ]
     if: |-
 
       false
 
-  bracket-omit:
+  omit-bracket:
     runs-on: ubuntu-latest
     steps: [ run: true ]
     if: >
       false
 
 #  # Invalid workflow syntax.
-#  bracket-comment-omit:
+#  omit-bracket-comment:
 #    runs-on: ubuntu-latest
 #    steps: [ run: true ]
 #    if: >
 #      # foo
 #      false
 
-  bracket-blank-omit:
+  omit-bracket-blank:
     runs-on: ubuntu-latest
     steps: [ run: true ]
     if: >
 
       false
 
-  bracket-dash-omit:
+  omit-bracket-dash:
     runs-on: ubuntu-latest
     steps: [ run: true ]
     if: >-
       false
 
 #  # Invalid workflow syntax.
-#  bracket-dash-comment-omit:
+#  omit-bracket-dash-comment:
 #    runs-on: ubuntu-latest
 #    steps: [ run: true ]
 #    if: >-
 #      # foo
 #      false
 
-  bracket-dash-blank-omit:
+  omit-bracket-dash-blank:
     runs-on: ubuntu-latest
     steps: [ run: true ]
     if: >-
