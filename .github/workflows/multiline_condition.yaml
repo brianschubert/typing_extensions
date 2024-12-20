@@ -100,12 +100,13 @@ jobs:
     if: |
       false
 
-  pipe-comment-omit:
-    runs-on: ubuntu-latest
-    steps: [ run: true ]
-    if: |
-      # foo
-      false
+#  # Invalid workflow syntax.
+#  pipe-comment-omit:
+#    runs-on: ubuntu-latest
+#    steps: [ run: true ]
+#    if: |
+#      # foo
+#      false
 
   pipe-blank-omit:
     runs-on: ubuntu-latest
@@ -120,12 +121,13 @@ jobs:
     if: |-
       false
 
-  pipe-dash-comment-omit:
-    runs-on: ubuntu-latest
-    steps: [ run: true ]
-    if: |-
-      # foo
-      false
+#  # Invalid workflow syntax.
+#  pipe-dash-comment-omit:
+#    runs-on: ubuntu-latest
+#    steps: [ run: true ]
+#    if: |-
+#      # foo
+#      false
 
   pipe-dash-blank-omit:
     runs-on: ubuntu-latest
@@ -140,12 +142,13 @@ jobs:
     if: >
       false
 
-  bracket-comment-omit:
-    runs-on: ubuntu-latest
-    steps: [ run: true ]
-    if: >
-      # foo
-      false
+#  # Invalid workflow syntax.
+#  bracket-comment-omit:
+#    runs-on: ubuntu-latest
+#    steps: [ run: true ]
+#    if: >
+#      # foo
+#      false
 
   bracket-blank-omit:
     runs-on: ubuntu-latest
@@ -160,12 +163,13 @@ jobs:
     if: >-
       false
 
-  bracket-dash-comment-omit:
-    runs-on: ubuntu-latest
-    steps: [ run: true ]
-    if: >-
-      # foo
-      false
+#  # Invalid workflow syntax.
+#  bracket-dash-comment-omit:
+#    runs-on: ubuntu-latest
+#    steps: [ run: true ]
+#    if: >-
+#      # foo
+#      false
 
   bracket-dash-blank-omit:
     runs-on: ubuntu-latest
