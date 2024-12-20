@@ -1,0 +1,90 @@
+on: [ push ]
+
+permissions:
+  contents: read
+
+jobs:
+  single-line:
+    runs-on: ubuntu-latest
+    steps: [ run: true ]
+    if: ${{ false }}
+
+  pipe:
+    runs-on: ubuntu-latest
+    steps: [ run: true ]
+    if: |
+      ${{ false }}
+
+  pipe-comment:
+    runs-on: ubuntu-latest
+    steps: [ run: true ]
+    if: |
+      # foo
+      ${{ false }}
+
+  pipe-blank:
+    runs-on: ubuntu-latest
+    steps: [ run: true ]
+    if: |
+
+      ${{ false }}
+
+  pipe-dash:
+    runs-on: ubuntu-latest
+    steps: [ run: true ]
+    if: |-
+      ${{ false }}
+
+  pipe-dash-comment:
+    runs-on: ubuntu-latest
+    steps: [ run: true ]
+    if: |-
+      # foo
+      ${{ false }}
+
+  pipe-dash-blank:
+    runs-on: ubuntu-latest
+    steps: [ run: true ]
+    if: |-
+
+      ${{ false }}
+
+  bracket:
+    runs-on: ubuntu-latest
+    steps: [ run: true ]
+    if: >
+      ${{ false }}
+
+  bracket-comment:
+    runs-on: ubuntu-latest
+    steps: [ run: true ]
+    if: >
+      # foo
+      ${{ false }}
+
+  bracket-blank:
+    runs-on: ubuntu-latest
+    steps: [ run: true ]
+    if: >
+
+      ${{ false }}
+
+  bracket-dash:
+    runs-on: ubuntu-latest
+    steps: [ run: true ]
+    if: >-
+      ${{ false }}
+
+  bracket-dash-comment:
+    runs-on: ubuntu-latest
+    steps: [ run: true ]
+    if: >-
+      # foo
+      ${{ false }}
+
+  bracket-dash-blank:
+    runs-on: ubuntu-latest
+    steps: [ run: true ]
+    if: >-
+
+      ${{ false }}
