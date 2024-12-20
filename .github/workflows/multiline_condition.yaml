@@ -88,3 +88,88 @@ jobs:
     if: >-
 
       ${{ false }}
+
+  single-line-omit:
+    runs-on: ubuntu-latest
+    steps: [ run: true ]
+    if: false
+
+  pipe-omit:
+    runs-on: ubuntu-latest
+    steps: [ run: true ]
+    if: |
+      false
+
+  pipe-comment-omit:
+    runs-on: ubuntu-latest
+    steps: [ run: true ]
+    if: |
+      # foo
+      false
+
+  pipe-blank-omit:
+    runs-on: ubuntu-latest
+    steps: [ run: true ]
+    if: |
+
+      false
+
+  pipe-dash-omit:
+    runs-on: ubuntu-latest
+    steps: [ run: true ]
+    if: |-
+      false
+
+  pipe-dash-comment-omit:
+    runs-on: ubuntu-latest
+    steps: [ run: true ]
+    if: |-
+      # foo
+      false
+
+  pipe-dash-blank-omit:
+    runs-on: ubuntu-latest
+    steps: [ run: true ]
+    if: |-
+
+      false
+
+  bracket-omit:
+    runs-on: ubuntu-latest
+    steps: [ run: true ]
+    if: >
+      false
+
+  bracket-comment-omit:
+    runs-on: ubuntu-latest
+    steps: [ run: true ]
+    if: >
+      # foo
+      false
+
+  bracket-blank-omit:
+    runs-on: ubuntu-latest
+    steps: [ run: true ]
+    if: >
+
+      false
+
+  bracket-dash-omit:
+    runs-on: ubuntu-latest
+    steps: [ run: true ]
+    if: >-
+      false
+
+  bracket-dash-comment-omit:
+    runs-on: ubuntu-latest
+    steps: [ run: true ]
+    if: >-
+      # foo
+      false
+
+  bracket-dash-blank-omit:
+    runs-on: ubuntu-latest
+    steps: [ run: true ]
+    if: >-
+
+      false
