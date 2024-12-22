@@ -33,7 +33,7 @@ jobs:
     # don't run it on contributors' forks
     if: >-
       github.repository == 'python/typing_extensions'
-      || github.event_name != 'schedule'
+      || false
     steps:
       - run: true
 
