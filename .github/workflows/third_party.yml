@@ -26,18 +26,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  skip-schedule-on-fork:
+    name: Check for schedule trigger on fork
+    runs-on: ubuntu-latest
+    # if 'schedule' was the trigger,
+    # don't run it on contributors' forks
+    if: >-
+      github.repository == 'python/typing_extensions'
+      || false
+    steps:
+      - run: true
+
   pydantic:
     name: pydantic tests
-    if: >-
-      # if 'schedule' was the trigger,
-      # don't run it on contributors' forks
-      ${{
-        github.event_name != 'schedule'
-        || (
-          github.repository == 'python/typing_extensions'
-          && github.event_name == 'schedule'
-        )
-      }}
+    needs: skip-schedule-on-fork
     strategy:
       fail-fast: false
       matrix:
@@ -72,16 +74,7 @@ jobs:
 
   typing_inspect:
     name: typing_inspect tests
-    if: >-
-      # if 'schedule' was the trigger,
-      # don't run it on contributors' forks
-      ${{
-        github.event_name != 'schedule'
-        || (
-          github.repository == 'python/typing_extensions'
-          && github.event_name == 'schedule'
-        )
-      }}
+    needs: skip-schedule-on-fork
     strategy:
       fail-fast: false
       matrix:
@@ -117,16 +110,7 @@ jobs:
 
   pyanalyze:
     name: pyanalyze tests
-    if: >-
-      # if 'schedule' was the trigger,
-      # don't run it on contributors' forks
-      ${{
-        github.event_name != 'schedule'
-        || (
-          github.repository == 'python/typing_extensions'
-          && github.event_name == 'schedule'
-        )
-      }}
+    needs: skip-schedule-on-fork
     strategy:
       fail-fast: false
       matrix:
@@ -163,16 +147,7 @@ jobs:
 
   typeguard:
     name: typeguard tests
-    if: >-
-      # if 'schedule' was the trigger,
-      # don't run it on contributors' forks
-      ${{
-        github.event_name != 'schedule'
-        || (
-          github.repository == 'python/typing_extensions'
-          && github.event_name == 'schedule'
-        )
-      }}
+    needs: skip-schedule-on-fork
     strategy:
       fail-fast: false
       matrix:
@@ -210,22 +185,11 @@ jobs:
 
   typed-argument-parser:
     name: typed-argument-parser tests
-    if: >-
-      # if 'schedule' was the trigger,
-      # don't run it on contributors' forks
-      ${{
-        github.event_name != 'schedule'
-        || (
-          github.repository == 'python/typing_extensions'
-          && github.event_name == 'schedule'
-        )
-      }}
+    needs: skip-schedule-on-fork
     strategy:
       fail-fast: false
       matrix:
-        # TODO: reenable 3.12 and 3.13 after they are fixed:
-        # https://github.com/swansonk14/typed-argument-parser/issues/156
-        python-version: ["3.9", "3.10", "3.11"]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
@@ -264,16 +228,7 @@ jobs:
 
   mypy:
     name: stubtest & mypyc tests
-    if: >-
-      # if 'schedule' was the trigger,
-      # don't run it on contributors' forks
-      ${{
-        github.event_name != 'schedule'
-        || (
-          github.repository == 'python/typing_extensions'
-          && github.event_name == 'schedule'
-        )
-      }}
+    needs: skip-schedule-on-fork
     strategy:
       fail-fast: false
       matrix:
@@ -311,16 +266,7 @@ jobs:
 
   cattrs:
     name: cattrs tests
-    if: >-
-      # if 'schedule' was the trigger,
-      # don't run it on contributors' forks
-      ${{
-        github.event_name != 'schedule'
-        || (
-          github.repository == 'python/typing_extensions'
-          && github.event_name == 'schedule'
-        )
-      }}
+    needs: skip-schedule-on-fork
     strategy:
       fail-fast: false
       matrix:
@@ -394,5 +340,5 @@ jobs:
               owner: "python",
               repo: "typing_extensions",
               title: `Third-party tests failed on ${new Date().toDateString()}`,
-              body: "Full history of runs listed here: https://github.com/python/typing_extensions/actions/workflows/third_party.yml",
+              body: "Run listed here: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
             })
