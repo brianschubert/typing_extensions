@@ -307,7 +307,7 @@ jobs:
       fail-fast: false
       matrix:
         python-version: [ "3.9", "3.10", "3.11", "3.12", "3.13", "pypy-3.10" ]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     timeout-minutes: 60
     steps:
       - name: Setup Python
