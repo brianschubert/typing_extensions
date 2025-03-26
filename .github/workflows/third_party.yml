@@ -306,10 +306,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [ "3.9", "3.10", "3.11", "3.12", "3.13", "pypy-3.10" ]
-        include:
-          - python-version: "pypy-3.10"
-            pytest-args: "-k 'not test_autocommit_on and not test_turn_autocommit_off_via_default_iso_level and not test_autocommit_isolation_level'"
+        # PyPy is deliberately omitted here, since SQLAlchemy's tests
+        # fail on PyPy for reason unrelated to typing_extensions.
+        python-version: [ "3.9", "3.10", "3.11", "3.12", "3.13" ]
     # sqlalchemy tests fail on Ubuntu 24.04
     # https://github.com/sqlalchemy/sqlalchemy/commit/8d73205f352e68c6603e90494494ef21027ec68f
     runs-on: ubuntu-22.04
@@ -339,7 +338,7 @@ jobs:
       - name: Run sqlalchemy tests
         run: |
           cd sqlalchemy
-          uv run tox -e github-nocext -- -q --nomemory --notimingintensive --dbdriver pysqlite --dbdriver aiosqlite
+          uv run tox -e github-nocext -- -q --nomemory --notimingintensive
         env:
           TOX_WORKERS: -n4
 
