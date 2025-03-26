@@ -336,6 +336,8 @@ jobs:
         run: |
           cd sqlalchemy
           uv run tox -e github-nocext -- -q --nomemory --notimingintensive
+        env:
+          TOX_WORKERS: -n4
 
   create-issue-on-failure:
     name: Create an issue if daily tests failed
