@@ -336,7 +336,7 @@ jobs:
       - name: Run sqlalchemy tests
         run: |
           cd sqlalchemy
-          uv run tox -e github-nocext -- -q --nomemory --notimingintensive
+          uv run tox -e github-cext -- -q --nomemory --notimingintensive
         env:
           TOX_WORKERS: -n4
 
