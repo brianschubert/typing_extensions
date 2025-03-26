@@ -322,14 +322,12 @@ jobs:
       - name: Checkout typing_extensions
         uses: actions/checkout@v4
         with:
-          # Temporary - avoid noise due to current 4.13 failures
-          ref: '4.12.2'
-          fetch-tags: true
           path: typing-extensions-latest
       - name: Install test dependencies
         run: |
           cd sqlalchemy
-          uv add --editable ../typing-extensions-latest
+#          uv add --editable ../typing-extensions-latest
+          uv add typing-extensions==4.12.2
           uv add tox setuptools
           uv sync
       - name: List installed dependencies
