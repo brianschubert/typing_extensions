@@ -300,6 +300,42 @@ jobs:
       - name: Run cattrs tests
         run: cd cattrs; pdm run pytest tests
 
+  sqlalchemy:
+    name: sqlalchemy tests
+    # needs: skip-schedule-on-fork
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ "3.9", "3.10", "3.11", "3.12", "3.13", "pypy-3.10" ]
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          allow-prereleases: true
+      - name: Install uv
+        run: curl -LsSf https://astral.sh/uv/install.sh | sh
+      - name: Checkout sqlalchemy
+        run: git clone --depth=1 https://github.com/sqlalchemy/sqlalchemy.git || git clone --depth=1 https://github.com/sqlalchemy/sqlalchemy.git
+      - name: Checkout typing_extensions
+        uses: actions/checkout@v4
+        with:
+          path: typing-extensions-latest
+      - name: Install test dependencies
+        run: |
+          cd sqlalchemy
+          uv add --editable ../typing-extensions-latest tox setuptools
+          uv sync
+      - name: List installed dependencies
+        run: cd sqlalchemy; uv pip list
+      - name: Run sqlalchemy tests
+        run: |
+          cd sqlalchemy
+          tox -e github-nocext -- -q --nomemory --notimingintensive
+
+
   create-issue-on-failure:
     name: Create an issue if daily tests failed
     runs-on: ubuntu-latest
@@ -312,6 +348,7 @@ jobs:
       - typed-argument-parser
       - mypy
       - cattrs
+      - sqlalchemy
 
     if: >-
         ${{
@@ -326,6 +363,7 @@ jobs:
             || needs.typed-argument-parser.result == 'failure'
             || needs.mypy.result == 'failure'
             || needs.cattrs.result == 'failure'
+            || needs.sqlalchemy.result == 'failure'
           )
         }}
 
