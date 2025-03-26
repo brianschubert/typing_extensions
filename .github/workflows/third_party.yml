@@ -339,7 +339,7 @@ jobs:
       - name: Run sqlalchemy tests
         run: |
           cd sqlalchemy
-          uv run tox -e github-nocext -- -q --nomemory --notimingintensive
+          uv run tox -e github-nocext -- -q --nomemory --notimingintensive --dbdriver pysqlite --dbdriver aiosqlite
         env:
           TOX_WORKERS: -n4
 
