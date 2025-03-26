@@ -302,7 +302,7 @@ jobs:
 
   sqlalchemy:
     name: sqlalchemy tests
-    # needs: skip-schedule-on-fork
+    needs: skip-schedule-on-fork
     strategy:
       fail-fast: false
       matrix:
@@ -322,6 +322,8 @@ jobs:
       - name: Checkout typing_extensions
         uses: actions/checkout@v4
         with:
+          # Temporary - avoid noise due to current 4.13 failures
+          ref: '4.12.2'
           path: typing-extensions-latest
       - name: Install test dependencies
         run: |
