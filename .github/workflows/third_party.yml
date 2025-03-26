@@ -334,7 +334,7 @@ jobs:
       - name: Run sqlalchemy tests
         run: |
           cd sqlalchemy
-          tox -e github-nocext -- -q --nomemory --notimingintensive
+          uv run tox -e github-nocext -- -q --nomemory --notimingintensive
 
   create-issue-on-failure:
     name: Create an issue if daily tests failed
