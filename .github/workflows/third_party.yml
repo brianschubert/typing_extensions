@@ -307,7 +307,7 @@ jobs:
       fail-fast: false
       matrix:
         # PyPy is deliberately omitted here, since SQLAlchemy's tests
-        # fail on PyPy for reason unrelated to typing_extensions.
+        # fail on PyPy for reasons unrelated to typing_extensions.
         python-version: [ "3.9", "3.10", "3.11", "3.12", "3.13" ]
     # sqlalchemy tests fail on Ubuntu 24.04
     # https://github.com/sqlalchemy/sqlalchemy/commit/8d73205f352e68c6603e90494494ef21027ec68f
@@ -330,7 +330,8 @@ jobs:
       - name: Install test dependencies
         run: |
           cd sqlalchemy
-          uv add --editable ../typing-extensions-latest
+          # uv add --editable ../typing-extensions-latest
+          uv add typing-extensions==4.12.2
           uv add tox setuptools
           uv sync
       - name: List installed dependencies
