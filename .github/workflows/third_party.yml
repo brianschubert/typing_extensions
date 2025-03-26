@@ -326,7 +326,8 @@ jobs:
       - name: Install test dependencies
         run: |
           cd sqlalchemy
-          uv add --editable ../typing-extensions-latest tox setuptools
+          uv add --editable ../typing-extensions-latest
+          uv add tox setuptools
           uv sync
       - name: List installed dependencies
         run: cd sqlalchemy; uv pip list
@@ -334,7 +335,6 @@ jobs:
         run: |
           cd sqlalchemy
           tox -e github-nocext -- -q --nomemory --notimingintensive
-
 
   create-issue-on-failure:
     name: Create an issue if daily tests failed
