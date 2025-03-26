@@ -307,6 +307,8 @@ jobs:
       fail-fast: false
       matrix:
         python-version: [ "3.9", "3.10", "3.11", "3.12", "3.13", "pypy-3.10" ]
+    # sqlalchemy tests fail on Ubuntu 24.04
+    # https://github.com/sqlalchemy/sqlalchemy/commit/8d73205f352e68c6603e90494494ef21027ec68f
     runs-on: ubuntu-22.04
     timeout-minutes: 60
     steps:
@@ -326,8 +328,7 @@ jobs:
       - name: Install test dependencies
         run: |
           cd sqlalchemy
-          # uv add --editable ../typing-extensions-latest
-          uv add typing-extensions==4.12.2
+          uv add --editable ../typing-extensions-latest
           uv add tox setuptools
           uv sync
       - name: List installed dependencies
