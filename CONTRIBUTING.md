@@ -68,3 +68,7 @@ may have installed.
 
 - Release automation will finish the release. You'll have to manually
   approve the last step before upload.
+
+- After making the release, update the version number in
+  `typing_extensions/pyproject.toml` to a `dev` version of the next planned release.
+  For example, change `4.1.1` to `4.2.0-dev`.
