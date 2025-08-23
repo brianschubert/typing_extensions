@@ -5499,6 +5499,25 @@ class GetTypeHintsTests(BaseTestCase):
             get_type_hints(foobar, globals(), locals(), include_extras=True),
             {'x': List[Annotated[int, (1, 10)]]}
         )
+        def foobar2(x: list['X']): ...
+        if sys.version_info >= (3, 11):
+            self.assertEqual(
+                get_type_hints(foobar2, globals(), locals()),
+                {'x': list[int]}
+            )
+            self.assertEqual(
+                get_type_hints(foobar2, globals(), locals(), include_extras=True),
+                {'x': list[Annotated[int, (1, 10)]]}
+            )
+        else:  # TODO: evaluate nested forward refs in Python < 3.11
+            self.assertEqual(
+                get_type_hints(foobar2, globals(), locals()),
+                {'x': list['X']}
+            )
+            self.assertEqual(
+                get_type_hints(foobar2, globals(), locals(), include_extras=True),
+                {'x': list['X']}
+            )
         BA = Tuple[Annotated[T, (1, 0)], ...]
         def barfoo(x: BA): ...
         self.assertEqual(get_type_hints(barfoo, globals(), locals())['x'], Tuple[T, ...])
@@ -5973,6 +5992,15 @@ class ParamSpecTests(BaseTestCase):
         # The actual test:
         self.assertEqual(result1, result2)
 
+    def test_subclass(self):
+        if sys.version_info >= (3, 10):
+            with self.assertRaises(TypeError):
+                class MyParamSpec(ParamSpec):
+                    pass
+        else:
+            class MyParamSpec(ParamSpec):  # Does not raise
+                pass
+
 
 class ConcatenateTests(BaseTestCase):
     def test_basics(self):
@@ -6381,6 +6409,14 @@ class SelfTests(BaseTestCase):
         for proto in range(pickle.HIGHEST_PROTOCOL + 1):
             pickled = pickle.dumps(Self, protocol=proto)
             self.assertIs(Self, pickle.loads(pickled))
+
+    @skipUnless(TYPING_3_10_0, "PEP 604 has yet to be")
+    def test_or(self):
+        self.assertEqual(Self | int, Union[Self, int])
+        self.assertEqual(int | Self, Union[int, Self])
+
+        self.assertEqual(get_args(Self | int), (Self, int))
+        self.assertEqual(get_args(int | Self), (int, Self))
 
 
 class UnpackTests(BaseTestCase):
