@@ -5973,6 +5973,11 @@ class ParamSpecTests(BaseTestCase):
         # The actual test:
         self.assertEqual(result1, result2)
 
+    def test_subclass(self):
+        with self.assertRaises(TypeError):
+            class MyParamSpec(ParamSpec):
+                pass
+
 
 class ConcatenateTests(BaseTestCase):
     def test_basics(self):
