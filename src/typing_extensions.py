@@ -3203,6 +3203,13 @@ def _is_unpacked_typevartuple(x) -> bool:
     )
 
 
+def _is_typevar_like(x: Any) -> bool:
+    tv_types = (TypeVar, ParamSpec, typing.TypeVar)
+    if hasattr("typing", "ParamSpec"):
+        tv_types += typing.ParamSpec
+    return isinstance(x, tv_types) or _is_unpacked_typevartuple(x)
+
+
 # Python 3.11+ _collect_type_vars was renamed to _collect_parameters
 if hasattr(typing, '_collect_type_vars'):
     def _collect_type_vars(types, typevar_types=None):
@@ -4255,6 +4262,59 @@ else:
         if value is ...:
             return "..."
         return repr(value)
+
+
+if sys.version_info < (3, 11):
+    def _generic_class_getitem(cls, params):
+        """Parameterizes a generic class.
+
+        At least, parameterizing a generic class is the *main* thing this method
+        does. For example, for some generic class `Foo`, this is called when we
+        do `Foo[int]` - there, with `cls=Foo` and `params=int`.
+
+        However, note that this method is also called when defining generic
+        classes in the first place with `class Foo(Generic[T]): ...`.
+        """
+        if not isinstance(params, tuple):
+            params = (params,)
+
+        params = tuple(typing._type_convert(p) for p in params)
+        if cls in (Generic, Protocol):
+            # Generic and Protocol can only be subscripted with unique type variables.
+            if not params:
+                raise TypeError(
+                    f"Parameter list to {cls.__qualname__}[...] cannot be empty"
+                )
+            if not all(_is_typevar_like(p) for p in params):
+                raise TypeError(
+                    f"Parameters to {cls.__name__}[...] must all be type variables "
+                    f"or parameter specification variables."
+                )
+            if len(set(params)) != len(params):
+                raise TypeError(
+                    f"Parameters to {cls.__name__}[...] must all be unique"
+                )
+        else:
+            # Subscripting a regular Generic subclass.
+            for param in cls.__parameters__:
+                prepare = getattr(param, '__typing_prepare_subst__', None)
+                if prepare is not None:
+                    params = prepare(cls, params)
+            _check_generic(cls, params, len(cls.__parameters__))
+
+            new_args = []
+            for param, new_arg in zip(cls.__parameters__, params):
+                if isinstance(param, TypeVarTuple):
+                    new_args.extend(new_arg)
+                else:
+                    new_args.append(new_arg)
+            params = tuple(new_args)
+
+        return typing._GenericAlias(
+            cls, params,
+        )
+
+    typing.Generic.__class_getitem__ = classmethod(_generic_class_getitem)
 
 
 # Aliases for items that are in typing in all supported versions.
