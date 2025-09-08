@@ -1,0 +1,5 @@
+comment:
+  layout: "condensed_header, diff, flags, condensed_files, condensed_footer"
+  # TODO: remove; temporary to test PR comment
+  # https://docs.codecov.com/docs/pull-request-comments#requiring-the-base-andor-head-commit
+  require_base: false
