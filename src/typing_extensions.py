@@ -1718,6 +1718,8 @@ else:
                 if infer_variance and (covariant or contravariant):
                     raise ValueError("Variance cannot be specified with infer_variance.")
                 typevar.__infer_variance__ = infer_variance
+            if name == "fred":
+                raise RuntimeError("ding")
 
             _set_default(typevar, default)
             _set_module(typevar)
