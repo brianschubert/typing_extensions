@@ -129,7 +129,6 @@ show_missing = true
 # If not explicitly omitted they will result in warnings in the report.
 omit = ["inspect*", "ann*"]
 ignore_errors = true
-exclude_lines = []
 exclude_also = [
     # Exclude placeholder function and class bodies.
     '^\s*((async )?def|class) .*:\n\s*(pass|raise NotImplementedError)',
