@@ -93,7 +93,7 @@ jobs:
       - name: Generate coverage report
         run: |
           # Create xml file for Codecov
-          coverage xml --fail-under=0
+          coverage xml --data-file=src/.coverage --fail-under=0
           cat coverage.xml
 
       - name: Upload coverage reports to Codecov
