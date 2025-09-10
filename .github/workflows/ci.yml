@@ -80,8 +80,6 @@ jobs:
           python --version  # just to make sure we're running the right one
           # Run tests under coverage
           python -m coverage run -m unittest test_typing_extensions.py
-          # Create xml file for Codecov
-          coverage xml --rcfile=../pyproject.toml --fail-under=0
 
       - name: Test CPython typing test suite
         # Test suite fails on PyPy even without typing_extensions
@@ -91,6 +89,12 @@ jobs:
           # Run the typing test suite from CPython with typing_extensions installed,
           # because we monkeypatch typing under some circumstances.
           python -c 'import typing_extensions; import test.__main__' test_typing -v
+
+      - name: Generate coverage report
+        run: |
+          # Create xml file for Codecov
+          coverage xml --fail-under=0
+          cat coverage.xml
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@5a1091511ad55cbe89839c7260b706298ca349f7
