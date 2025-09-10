@@ -132,4 +132,5 @@ ignore_errors = true
 exclude_also = [
     # Exclude placeholder function and class bodies.
     '^\s*((async )?def|class) .*:\n\s*(pass|raise NotImplementedError)',
+    "\s*pass\s*",
 ]
