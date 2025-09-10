@@ -102,7 +102,6 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_ORG_TOKEN }}
           flags: ${{ matrix.python-version }}
-          directory: src
           fail_ci_if_error: true
           verbose: true
 
