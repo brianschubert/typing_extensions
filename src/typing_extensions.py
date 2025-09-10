@@ -912,7 +912,7 @@ else:
 
         @abc.abstractmethod
         def __int__(self) -> int:
-            ...
+            pass
 
     @runtime_checkable
     class SupportsFloat(Protocol):
@@ -921,7 +921,7 @@ else:
 
         @abc.abstractmethod
         def __float__(self) -> float:
-            pass  # pragma: no cover
+            pass
 
     @runtime_checkable
     class SupportsComplex(Protocol):
