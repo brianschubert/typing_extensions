@@ -97,7 +97,7 @@ jobs:
         if: ${{ (github.event_name == 'push' || github.event_name == 'pull_request') }}
         with:
           token: ${{ secrets.CODECOV_ORG_TOKEN }}
-          flags: ${{ matrix.python-version }}
+          flags: ${{ startsWith(matrix.python-version, 'pypy') && 'PyPy' || 'CPython' }}
           directory: src
           fail_ci_if_error: true
           verbose: true
